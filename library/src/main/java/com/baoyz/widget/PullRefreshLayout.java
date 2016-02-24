@@ -59,6 +59,8 @@ public class PullRefreshLayout extends ViewGroup {
     private boolean mDispatchTargetTouchDown;
     private float mDragPercent;
 
+    private View _scrollableChild;
+
     public PullRefreshLayout(Context context) {
         this(context, null);
     }
@@ -94,6 +96,10 @@ public class PullRefreshLayout extends ViewGroup {
         addView(mRefreshView, 0);
         setWillNotDraw(false);
         ViewCompat.setChildrenDrawingOrderEnabled(this, true);
+    }
+
+    public void setScrollableChild(View scrollableChild){
+        _scrollableChild = scrollableChild;
     }
 
     public void setColorSchemeColors(int... colorSchemeColors) {
@@ -171,7 +177,13 @@ public class PullRefreshLayout extends ViewGroup {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        if (!isEnabled() || (canChildScrollUp() && !mRefreshing)) {
+        boolean scrollableChildCanScroll = false;
+
+        if(_scrollableChild!=null) {
+            scrollableChildCanScroll = ViewCompat.canScrollVertically(_scrollableChild, -1);
+        }
+
+        if (!isEnabled() || canChildScrollUp() || scrollableChildCanScroll || mRefreshing) {
             return false;
         }
 
