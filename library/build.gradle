@@ -24,7 +24,7 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.0'
     compile 'com.android.support:support-annotations:21.0.3'
 }
-
+/*
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
@@ -95,3 +95,4 @@ bintray {
         publish = true
     }
 }
+*/
